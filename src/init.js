@@ -22,7 +22,7 @@ $(document).ready(function(){
     // make a dancer with a random position
 
     var dancer = new dancerMakerFunction(
-      $("body").height() * Math.random(),
+      $("body").height() * ((Math.random() * 0.5) + 0.3),
       $("body").width() * Math.random(),
       Math.random() * 1000
     );
@@ -30,6 +30,7 @@ $(document).ready(function(){
   });
 
   $(".lineUpBottom").on("click", function(event){
+    $('breakDancer').stop();
     var numDancers = $('.dancer').length;
     $('.dancer').each(function(index, elem) {
       $(elem).animate({ "top": "75%",
@@ -38,6 +39,11 @@ $(document).ready(function(){
   });
 
   $(".lineUpLeft").on("click", function(event){
+    $('breakDancer').stop();
+    $('.breakDancer').each(function(item, elem) {
+      cancelAnimationFrame(myReq);
+    });
+
     var numDancers = $('.dancer').length;
     $('.dancer').each(function(index, elem) {
       $(elem).animate({ "top": Math.floor((index + 1)/(numDancers + 1) * screen.height) + "px",
@@ -45,20 +51,41 @@ $(document).ready(function(){
     });
   });
 
-  $(".revolve").on("click", function() {
-    var $dancers = $('.dancer');
-    $dancers.each(function(index, elem) {
+  var myReq;
 
+
+  $(".revolve").on("click", function() {
+    var $dancers = $('.breakDancer');
+    $dancers.each(function(index, elem) {
+    var position = $(elem).position();
     var angle = 0, lastTime = null;
     function animate(time) {
       if (lastTime != null)
         angle += (time - lastTime) * 0.001;
       lastTime = time;
-      elem.style.top = (Math.sin(angle) * 20) + "px";
-      elem.style.left = (Math.cos(angle) * 200) + "px";
-      requestAnimationFrame(animate);
+      elem.style.top = (position.top + (Math.sin(angle) * 50)) + "px";
+      elem.style.left = (position.left + (Math.cos(angle) * 200)) + "px";
+      myReq = requestAnimationFrame(animate);
       }
-      requestAnimationFrame(animate);
+      myReq = requestAnimationFrame(animate);
+    });
+  });
+
+  $('.free-dance').on('click', function() {
+    var $dancers = $('.dancer');
+    $dancers.each(function(index, elem) {
+      var topPos = $("body").height() * ((Math.random() * 0.5) + 0.3);
+      var leftPos = $("body").width() * Math.random();
+      $(elem).animate({"top": topPos, "left": leftPos}, 2000);
+      //Dancer.prototype.setPosition.call(elem, topPos, leftPos);
+    });
+  });
+
+  $('.dancer').filter('.balletDancer').on('mouseenter', function(event) {
+    $(this).css({
+      "-ms-transform": "rotate(180deg)",
+    "-webkit-transform": "rotate(180deg)",
+    "transform": "rotate(180deg)"
     });
   });
 

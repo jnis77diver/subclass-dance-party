@@ -8,11 +8,8 @@ ModernDancer.prototype = Object.create(Dancer.prototype);
 ModernDancer.prototype.constructor = ModernDancer;
 
 //add new methods to makeBD.prototype
-ModernDancer.prototype.step = function(){  //remove param later
+ModernDancer.prototype.step = function(){
   var self = this;
-  // call the old version of step at the beginning of any call to this new version of step
-  //oldStep.call(self, self.timeBetweenSteps);
-  //ALTERNATIVE
   Dancer.prototype.step.call(self);
   // toggle() is a jQuery method to show/hide the <span> tag.
   // See http://api.jquery.com/category/effects/ for this and

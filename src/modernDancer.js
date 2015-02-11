@@ -1,14 +1,14 @@
-var BlinkyDancer = function(top, left, timeBetweenSteps){
+var ModernDancer = function(top, left, timeBetweenSteps){
   Dancer.call(this, top, left, timeBetweenSteps);
 };
 
-BlinkyDancer.prototype = Object.create(Dancer.prototype);
+ModernDancer.prototype = Object.create(Dancer.prototype);
 
 //update constructor
-BlinkyDancer.prototype.constructor = BlinkyDancer;
+ModernDancer.prototype.constructor = ModernDancer;
 
 //add new methods to makeBD.prototype
-BlinkyDancer.prototype.step = function(){  //remove param later
+ModernDancer.prototype.step = function(){  //remove param later
   var self = this;
   // call the old version of step at the beginning of any call to this new version of step
   //oldStep.call(self, self.timeBetweenSteps);
@@ -19,7 +19,3 @@ BlinkyDancer.prototype.step = function(){  //remove param later
   // other effects you can use on a jQuery-wrapped html tag.
   self.$node.toggle();
 };
-
-
-
-
